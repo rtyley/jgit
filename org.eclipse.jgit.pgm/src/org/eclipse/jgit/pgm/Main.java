@@ -260,7 +260,8 @@ public class Main {
 			return false;
 		} catch (UnsupportedClassVersionError e) {
 			return false;
-
+        } catch (NoSuchMethodError e) {
+			return false;
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(CLIText.get().cannotSetupConsole, e);
 		} catch (SecurityException e) {
