@@ -68,7 +68,7 @@ public class InflaterCache {
 	 */
 	public static Inflater get() {
 		final Inflater r = getImpl();
-		return r != null ? r : new Inflater(false);
+		return r != null ? r : new HarmonyFixInflater();
 	}
 
 	private synchronized static Inflater getImpl() {
