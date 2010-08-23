@@ -12,6 +12,8 @@ import java.util.zip.Inflater;
  */
 public class HarmonyFixInflater extends Inflater {
 
+    private static final byte[] oneByteArray = new byte[1];
+
     public HarmonyFixInflater() {
         super(false);
     }
@@ -49,12 +51,17 @@ public class HarmonyFixInflater extends Inflater {
     }
 
     public int inflate(byte[] b, int off, int len) throws DataFormatException {
-        if (b.length==0) {
-            System.out.println("I'm totally doin it!");
-            b=new byte[1];
-            len=1;
+        //return super.inflate(b, off, len);
+        if (len!=0) {
+            return super.inflate(b, off, len);
         }
-        return super.inflate(b, off, len);
+        System.out.println("Performing zero-len harmony hack");
+
+        int bytesInflated=super.inflate(oneByteArray, 0, 1); // have to pretend to want at least one byte so that the finished flag is correctly set
+        if (bytesInflated>0) {
+            throw new RuntimeException("The Harmony-Fix hack has served you ill, we were not supposed to read any data...");
+        }
+        return 0;
     }
 
     public int inflate(byte[] b) throws DataFormatException {
