@@ -3,13 +3,6 @@ package org.eclipse.jgit.lib;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-/**
- * Created by IntelliJ IDEA.
- * User: roberto
- * Date: 19-Aug-2010
- * Time: 15:57:23
- * To change this template use File | Settings | File Templates.
- */
 public class HarmonyFixInflater extends Inflater {
 
     private static final byte[] oneByteArray = new byte[1];
@@ -51,11 +44,9 @@ public class HarmonyFixInflater extends Inflater {
     }
 
     public int inflate(byte[] b, int off, int len) throws DataFormatException {
-        //return super.inflate(b, off, len);
         if (len!=0) {
             return super.inflate(b, off, len);
         }
-        System.out.println("Performing zero-len harmony hack");
 
         int bytesInflated=super.inflate(oneByteArray, 0, 1); // have to pretend to want at least one byte so that the finished flag is correctly set
         if (bytesInflated>0) {
