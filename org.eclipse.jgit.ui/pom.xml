@@ -50,7 +50,7 @@
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
-    <version>0.8.1-UNOFFICIAL-HARMONY-6637-FIX</version>
+    <version>0.8.2-UNOFFICIAL-HARMONY-6637-FIX-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.ui</artifactId>
