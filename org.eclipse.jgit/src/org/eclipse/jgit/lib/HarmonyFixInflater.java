@@ -3,6 +3,11 @@ package org.eclipse.jgit.lib;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
+/*
+ * See https://issues.apache.org/jira/browse/HARMONY-6637 - basically, Harmony JRE will not set finished()=true when you ask it
+ * to inflate zero bytes of data, even if you are looking at a zero-length stream or just happened to have already inflated exactly the
+ * amount of data you were already looking for. This causes problem for IndexPack.inflate() and other Inflater-users.
+ */
 public class HarmonyFixInflater extends Inflater {
 
     private static final byte[] oneByteArray = new byte[1];
