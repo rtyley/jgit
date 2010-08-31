@@ -45,12 +45,8 @@
 
 package org.eclipse.jgit.transport;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -77,10 +73,14 @@ import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.objectcheckers.IObjectChecker;
 import org.eclipse.jgit.storage.file.PackIndexWriter;
 import org.eclipse.jgit.storage.file.PackLock;
 import org.eclipse.jgit.storage.pack.BinaryDelta;
 import org.eclipse.jgit.util.NB;
+import org.eclipse.jgit.util.io.NullOutputStream;
+
+import static java.lang.Math.min;
 
 import static java.util.Arrays.asList;
 
@@ -211,7 +211,7 @@ public class IndexPack {
 
 	private LongMap<UnresolvedDelta> baseByPos;
 
-	private byte[] skipBuffer;
+	private byte[] outBuffer;
 
 	private MessageDigest packDigest;
 
@@ -243,7 +243,7 @@ public class IndexPack {
 		inflater = InflaterCache.get();
 		readCurs = objectDatabase.newReader();
 		buf = new byte[BUFFER_SIZE];
-		skipBuffer = new byte[512];
+		outBuffer = new byte[2048];
 		objectDigest = Constants.newMessageDigest();
 		tempObjectId = new MutableObjectId();
 		packDigest = Constants.newMessageDigest();
@@ -403,7 +403,6 @@ public class IndexPack {
 				progress.beginTask(JGitText.get().receivingObjects,
 						(int) objectCount);
 				for (int done = 0; done < objectCount; done++) {
-                    System.out.println("index() done="+done);
 					indexOneObject();
 					progress.update(1);
 					if (progress.isCancelled())
@@ -681,7 +680,7 @@ public class IndexPack {
 		fill(Source.FILE, 12);
 
 		{
-			final int origCnt = (int) Math.min(bAvail, origRemaining);
+			final int origCnt = (int) min(bAvail, origRemaining);
 			origDigest.update(buf, 0, origCnt);
 			origRemaining -= origCnt;
 			if (origRemaining == 0)
@@ -700,7 +699,7 @@ public class IndexPack {
 			if (n < 0)
 				break;
 			if (origRemaining != 0) {
-				final int origCnt = (int) Math.min(n, origRemaining);
+				final int origCnt = (int) min(n, origRemaining);
 				origDigest.update(buf, 0, origCnt);
 				origRemaining -= origCnt;
 				if (origRemaining == 0)
@@ -778,7 +777,6 @@ public class IndexPack {
 	// Cleanup all resources associated with our input parsing.
 	private void endInput() {
 		in = null;
-		skipBuffer = null;
 	}
 
 	// Read one entire object or delta from the input.
@@ -842,29 +840,44 @@ public class IndexPack {
 
 	private void whole(final int type, final long pos, final long sz)
 			throws IOException {
-		final byte[] data = inflateAndReturn(Source.INPUT, sz);
-		objectDigest.update(Constants.encodedTypeString(type));
-		objectDigest.update((byte) ' ');
-		objectDigest.update(Constants.encodeASCII(sz));
-		objectDigest.update((byte) 0);
-		objectDigest.update(data);
-		tempObjectId.fromRaw(objectDigest.digest(), 0);
-        System.out.println("whole("+type+","+pos+","+sz+") id="+tempObjectId+" data.length="+ data.length);
-		verifySafeObject(tempObjectId, type, data);
+
+        IObjectChecker checker=(objCheck==null)?null:objCheck.checkerFor(type);
+		if (checker != null) {
+            ByteArrayOutputStream destinationForInflatedObjectData=new ByteArrayOutputStream((int) sz);
+            updateTempObjectIdWithDigestForPackedObject(type, sz, destinationForInflatedObjectData);
+            byte[] data = destinationForInflatedObjectData.toByteArray();
+            try {
+                checker.check(data);
+			} catch (CorruptObjectException e) {
+				throw new IOException(MessageFormat.format(JGitText.get().invalidObject
+						, Constants.typeString(type) , tempObjectId.name() , e.getMessage()));
+			}
+            verifySafeObject(tempObjectId, type, data); // Really, just trying to stop big blobs getting processed
+        } else {
+            updateTempObjectIdWithDigestForPackedObject(type, sz, NullOutputStream.INSTANCE);
+		}
+
 		final int crc32 = (int) crc.getValue();
 		addObjectAndTrack(new PackedObjectInfo(pos, crc32, tempObjectId));
 	}
 
-	private void verifySafeObject(final AnyObjectId id, final int type,
+    private void updateTempObjectIdWithDigestForPackedObject(int type, long sz, OutputStream inflatedDataDestination) throws IOException {
+        tempObjectId.fromRaw(digestForPackedObject(type, sz, inflatedDataDestination), 0);
+    }
+
+    private byte[] digestForPackedObject(int type, long sz, OutputStream inflatedDataDestination) throws IOException {
+        objectDigest.update(Constants.encodedTypeString(type));
+        objectDigest.update((byte) ' ');
+        objectDigest.update(Constants.encodeASCII(sz));
+        objectDigest.update((byte) 0); // don't write this header crap to the 'inflated data stream, duh!
+        DigestOutputStream digestOutputStream = new DigestOutputStream(inflatedDataDestination, objectDigest);
+        inflate(Source.INPUT, sz, digestOutputStream);
+        digestOutputStream.flush();
+        return objectDigest.digest();
+    }
+
+    private void verifySafeObject(final AnyObjectId id, final int type,
 			final byte[] data) throws IOException {
-		if (objCheck != null) {
-			try {
-				objCheck.check(type, data);
-			} catch (CorruptObjectException e) {
-				throw new IOException(MessageFormat.format(JGitText.get().invalidObject
-						, Constants.typeString(type) , id.name() , e.getMessage()));
-			}
-		}
 
 		try {
 			final ObjectLoader ldr = readCurs.open(id, type);
@@ -954,27 +967,27 @@ public class IndexPack {
 
 	private void inflateAndSkip(final Source src, final long inflatedSize)
 			throws IOException {
-		inflate(src, inflatedSize, skipBuffer, false /* do not keep result */);
+		inflate(src, inflatedSize, NullOutputStream.INSTANCE  /* do not keep result */);
 	}
 
 	private byte[] inflateAndReturn(final Source src, final long inflatedSize)
 			throws IOException {
-		final byte[] dst = new byte[(int) inflatedSize];
-		inflate(src, inflatedSize, dst, true /* keep result in dst */);
-		return dst;
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream((int)inflatedSize);
+		inflate(src, inflatedSize, byteArrayOutputStream  /* keep result in dst */);
+		return byteArrayOutputStream.toByteArray();
 	}
 
 	private void inflate(final Source src, final long inflatedSize,
-			final byte[] dst, final boolean keep) throws IOException {
+                         final OutputStream dst) throws IOException {
 		final Inflater inf = inflater;
 		try {
-			int off = 0;
 			long cnt = 0;
 			int p = fill(src, 24);
 			inf.setInput(buf, p, bAvail);
 
 			for (;;) {
-				int r = inf.inflate(dst, off, dst.length - off);
+				int r = inf.inflate(outBuffer, 0, (int) min(outBuffer.length,inflatedSize - cnt));
+                dst.write(outBuffer,0,r);
 				if (r == 0) {
 					if (inf.finished())
 						break;
@@ -986,14 +999,12 @@ public class IndexPack {
 						p = fill(src, 24);
 						inf.setInput(buf, p, bAvail);
 					} else {
-						throw new CorruptObjectException(MessageFormat.format(
+                        throw new CorruptObjectException(MessageFormat.format(
 								JGitText.get().packfileCorruptionDetected,
 								JGitText.get().unknownZlibError));
 					}
 				}
 				cnt += r;
-				if (keep)
-					off += r;
 			}
 
 			if (cnt != inflatedSize) {
@@ -1008,7 +1019,7 @@ public class IndexPack {
 				use(left);
 			}
 		} catch (DataFormatException dfe) {
-			throw new CorruptObjectException(MessageFormat.format(JGitText
+            throw new CorruptObjectException(MessageFormat.format(JGitText
 					.get().packfileCorruptionDetected, dfe.getMessage()));
 		} finally {
 			inf.reset();
