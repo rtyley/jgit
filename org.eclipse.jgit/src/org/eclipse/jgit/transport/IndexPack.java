@@ -874,7 +874,7 @@ public class IndexPack {
         objectDigest.update(Constants.encodedTypeString(type));
         objectDigest.update((byte) ' ');
         objectDigest.update(Constants.encodeASCII(sz));
-        objectDigest.update((byte) 0); // don't write this header crap to the 'inflated data stream, duh!
+        objectDigest.update((byte) 0);
         DigestOutputStream digestOutputStream = new DigestOutputStream(inflatedDataDestination, objectDigest);
         inflate(Source.INPUT, sz, digestOutputStream);
         digestOutputStream.flush();
