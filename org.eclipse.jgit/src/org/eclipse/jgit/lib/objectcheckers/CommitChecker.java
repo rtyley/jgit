@@ -6,11 +6,13 @@ import org.eclipse.jgit.lib.MutableObjectId;
 import org.eclipse.jgit.lib.ObjectChecker;
 import org.eclipse.jgit.util.MutableInteger;
 
+import static java.util.Arrays.asList;
 import static org.eclipse.jgit.util.RawParseUtils.*;
 
 public class CommitChecker implements IObjectChecker {
     
 	public void check(final byte[] raw) throws CorruptObjectException {
+        System.out.println("Verifying COMMIT : "+asList(raw.length));
 		int ptr = 0;
 
 		if ((ptr = match(raw, ptr, ObjectChecker.tree)) < 0)
