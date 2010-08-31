@@ -408,6 +408,7 @@ public class IndexPack {
 
 				progress.beginTask(PROGRESS_DOWNLOAD, (int) objectCount);
 				for (int done = 0; done < objectCount; done++) {
+                    System.out.println("index() done="+done);
 					indexOneObject();
 					progress.update(1);
 					if (progress.isCancelled())
