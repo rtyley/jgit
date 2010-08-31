@@ -21,7 +21,6 @@ public class TagChecker implements IObjectChecker {
 	 *             if any error was detected.
 	 */
 	public void check(final byte[] raw) throws CorruptObjectException {
-        System.out.println("Verifying TAG : "+asList(raw.length));
 		int ptr = 0;
 
 		if ((ptr = match(raw, ptr, ObjectChecker.object)) < 0)

@@ -13,7 +13,6 @@ import static org.eclipse.jgit.util.RawParseUtils.*;
 public class TreeChecker implements IObjectChecker {
 
 	public void check(final byte[] raw) throws CorruptObjectException {
-        System.out.println("Verifying TREE : "+asList(raw.length));
         final int sz = raw.length;
         int ptr = 0;
         int lastNameB = 0, lastNameE = 0, lastMode = 0;
