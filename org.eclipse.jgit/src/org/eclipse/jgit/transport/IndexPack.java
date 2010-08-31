@@ -82,6 +82,8 @@ import org.eclipse.jgit.storage.file.PackLock;
 import org.eclipse.jgit.storage.pack.BinaryDelta;
 import org.eclipse.jgit.util.NB;
 
+import static java.util.Arrays.asList;
+
 /** Indexes Git pack files for local use. */
 public class IndexPack {
 	/**
@@ -726,7 +728,7 @@ public class IndexPack {
 
 	private void writeIdx() throws IOException {
 		Arrays.sort(entries, 0, entryCount);
-		List<PackedObjectInfo> list = Arrays.asList(entries);
+		List<PackedObjectInfo> list = asList(entries);
 		if (entryCount < entries.length)
 			list = list.subList(0, entryCount);
 
@@ -846,7 +848,7 @@ public class IndexPack {
 		objectDigest.update((byte) 0);
 		objectDigest.update(data);
 		tempObjectId.fromRaw(objectDigest.digest(), 0);
-
+        System.out.println("whole("+type+","+pos+","+sz+") id="+tempObjectId+" data.length="+ data.length);
 		verifySafeObject(tempObjectId, type, data);
 		final int crc32 = (int) crc.getValue();
 		addObjectAndTrack(new PackedObjectInfo(pos, crc32, tempObjectId));

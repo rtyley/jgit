@@ -6,6 +6,7 @@ import org.eclipse.jgit.lib.MutableObjectId;
 import org.eclipse.jgit.lib.ObjectChecker;
 import org.eclipse.jgit.util.MutableInteger;
 
+import static java.util.Arrays.asList;
 import static org.eclipse.jgit.util.RawParseUtils.match;
 import static org.eclipse.jgit.util.RawParseUtils.nextLF;
 import static org.eclipse.jgit.util.RawParseUtils.parseBase10;
@@ -20,6 +21,7 @@ public class TagChecker implements IObjectChecker {
 	 *             if any error was detected.
 	 */
 	public void check(final byte[] raw) throws CorruptObjectException {
+        System.out.println("Verifying TAG : "+asList(raw.length));
 		int ptr = 0;
 
 		if ((ptr = match(raw, ptr, ObjectChecker.object)) < 0)
