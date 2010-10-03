@@ -64,13 +64,12 @@ public abstract class FS {
 			DETECTED = new FS_POSIX_Java5();
 	}
 
-	private final File userHome;
+	private File userHome;
 
 	/**
 	 * Constructs a file system abstraction.
 	 */
 	protected FS() {
-		this.userHome = userHomeImpl();
 	}
 
 	/**
@@ -144,7 +143,10 @@ public abstract class FS {
 	 *
 	 * @return the user's home directory; null if the user does not have one.
 	 */
-	public File userHome() {
+	public final File userHome() {
+        if (userHome==null) {
+            userHome=userHomeImpl();
+        }
 		return userHome;
 	}
 
