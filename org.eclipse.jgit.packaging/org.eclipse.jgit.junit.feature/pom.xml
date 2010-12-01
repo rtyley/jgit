@@ -50,7 +50,7 @@
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>jgit.tycho.parent</artifactId>
-    <version>0.10.0-SNAPSHOT</version>
+    <version>0.9.9.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.junit.feature</artifactId>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.junit</artifactId>
-      <version>0.10.0-SNAPSHOT</version>
+      <version>0.9.9.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
