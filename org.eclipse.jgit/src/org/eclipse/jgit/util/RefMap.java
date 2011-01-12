@@ -165,7 +165,7 @@ public class RefMap extends AbstractMap<String, Ref> {
 		String name = toRefName(keyName);
 
 		if (!name.equals(value.getName()))
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("keyName="+keyName+" name="+name+" value.getName="+value.getName());
 
 		if (!resolved.isEmpty()) {
 			// Collapse the resolved list into the loose list so we
