@@ -53,7 +53,7 @@
 
   <artifactId>org.eclipse.jgit-parent</artifactId>
   <packaging>pom</packaging>
-  <version>0.9.9.99.1</version>
+  <version>0.9.9.99.2-SNAPSHOT</version>
 
   <name>JGit - Parent</name>
   <url>${jgit-url}</url>
