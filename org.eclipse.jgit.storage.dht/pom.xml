@@ -48,9 +48,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.eclipse.jgit</groupId>
+    <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.9.9.99.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.storage.dht</artifactId>
@@ -66,7 +66,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
       <version>${project.version}</version>
     </dependency>
