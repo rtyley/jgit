@@ -854,7 +854,7 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 						+ conn.getResponseMessage());
 			}
 
-			final String contentType = conn.getContentType();
+			final String contentType = conn.getContentType().replace("-response","-result");
 			if (!responseType.equals(contentType)) {
 				conn.getInputStream().close();
 				throw wrongContentType(responseType, contentType);
