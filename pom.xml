@@ -42,9 +42,7 @@
    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
@@ -55,7 +53,7 @@
 
   <artifactId>org.eclipse.jgit-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.99.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
+  <version>1.0.99.0.3-UNOFFICIAL-ROBERTO-RELEASE</version>
 
   <name>JGit - Parent</name>
   <url>${jgit-url}</url>
@@ -277,9 +275,9 @@
             <phase>generate-resources</phase>
             <configuration>
               <tasks unless="${translate-qualifier}">
-                <copy file="META-INF/MANIFEST.MF" tofile="${bundle-manifest}" overwrite="true"/>
+                <copy file="META-INF/MANIFEST.MF" tofile="${bundle-manifest}" overwrite="true" />
                 <replace file="${bundle-manifest}">
-                  <replacefilter token=".qualifier" value=".${maven.build.timestamp}"/>
+                  <replacefilter token=".qualifier" value=".${maven.build.timestamp}" />
                 </replace>
               </tasks>
             </configuration>
