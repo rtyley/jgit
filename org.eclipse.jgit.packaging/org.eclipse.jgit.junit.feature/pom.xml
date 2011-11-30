@@ -50,7 +50,7 @@
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>jgit.tycho.parent</artifactId>
-    <version>1.2.0.201112221803-r</version>
+    <version>1.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.junit.feature</artifactId>
@@ -62,17 +62,17 @@
     <dependency>
       <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.junit</artifactId>
-      <version>1.2.0.201112221803-r</version>
+      <version>1.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.junit.http</artifactId>
-      <version>1.2.0.201112221803-r</version>
+      <version>1.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.http.server</artifactId>
-      <version>1.2.0.201112221803-r</version>
+      <version>1.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
