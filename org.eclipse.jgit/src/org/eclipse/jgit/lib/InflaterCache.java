@@ -46,15 +46,18 @@ package org.eclipse.jgit.lib;
 
 import java.util.zip.Inflater;
 
+import static org.eclipse.jgit.lib.InflaterFactory.STANDARD_FACTORY;
+
 /** Creates zlib based inflaters as necessary for object decompression. */
 public class InflaterCache {
 	private static final int SZ = 4;
 
+    public static InflaterFactory INFLATER_FACTORY = STANDARD_FACTORY;
+
 	private static final Inflater[] inflaterCache;
+    private static int openInflaterCount;
 
-	private static int openInflaterCount;
-
-	static {
+    static {
 		inflaterCache = new Inflater[SZ];
 	}
 
@@ -68,7 +71,7 @@ public class InflaterCache {
 	 */
 	public static Inflater get() {
 		final Inflater r = getImpl();
-		return r != null ? r : new Inflater(false);
+		return r != null ? r : INFLATER_FACTORY.create();
 	}
 
 	private synchronized static Inflater getImpl() {
