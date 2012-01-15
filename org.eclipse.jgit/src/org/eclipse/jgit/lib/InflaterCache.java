@@ -94,7 +94,7 @@ public class InflaterCache {
 		if (i != null) {
 			i.reset();
 			if (releaseImpl(i))
-				i.end();
+                INFLATER_FACTORY.decommision(i);
 		}
 	}
 
