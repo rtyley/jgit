@@ -46,6 +46,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>4</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.eclipse.jgit</groupId>
@@ -57,12 +62,13 @@
   <url>${jgit-url}</url>
 
   <description>
-    Pure Java implementation of Git
+    Pure Java implementation of Git (unofficial patched build by Roberto Tyley)
   </description>
 
   <scm>
-    <url>http://egit.eclipse.org/w/?p=jgit.git</url>
-    <connection>scm:git:git://egit.eclipse.org/jgit.git</connection>
+    <url>git@github.com:rtyley/jgit.git</url>
+    <connection>scm:git:git@github.com:rtyley/jgit.git</connection>
+    <developerConnection>scm:git:git@github.com:rtyley/jgit.git</developerConnection>
   </scm>
 
   <developers>
@@ -164,7 +170,6 @@
       </comments>
     </license>
   </licenses>
-
   <properties>
     <jgit-url>http://www.eclipse.org/jgit/</jgit-url>
     <jgit-copyright>Copyright (c) 2005, 2009 Shawn Pearce, Robin Rosenberg, et.al.</jgit-copyright>
@@ -476,21 +481,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>repo.eclipse.org</id>
-      <name>JGit Maven Repository - Releases</name>
-      <url>https://repo.eclipse.org/content/repositories/jgit-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>repo.eclipse.org</id>
-      <name>JGit Maven Repository - Snapshots</name>
-      <url>https://repo.eclipse.org/content/repositories/jgit-snapshots/</url>
-      <uniqueVersion>true</uniqueVersion>
-    </snapshotRepository>
-  </distributionManagement>
-
   <profiles>
     <profile>
       <id>jgit.java6</id>
