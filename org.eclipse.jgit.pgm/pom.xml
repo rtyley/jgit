@@ -48,7 +48,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.eclipse.jgit</groupId>
+    <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
     <version>2.3.2-SNAPSHOT</version>
   </parent>
@@ -77,13 +77,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.ui</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -97,7 +97,7 @@
       </activation>
       <dependencies>
         <dependency>
-          <groupId>org.eclipse.jgit</groupId>
+          <groupId>com.madgag</groupId>
           <artifactId>org.eclipse.jgit.console</artifactId>
           <version>${project.version}</version>
         </dependency>
