@@ -53,7 +53,7 @@
 
   <groupId>com.madgag</groupId>
   <artifactId>jgit.tycho.parent</artifactId>
-  <version>2.3.2-SNAPSHOT</version>
+  <version>2.3.1.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>JGit Tycho Parent</name>

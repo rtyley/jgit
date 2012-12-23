@@ -50,7 +50,7 @@
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
+    <version>2.3.1.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.pgm</artifactId>
