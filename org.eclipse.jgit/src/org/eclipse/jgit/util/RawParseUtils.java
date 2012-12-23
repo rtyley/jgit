@@ -821,8 +821,10 @@ public final class RawParseUtils {
 			for (;;) {
 				final byte c = raw[ptr];
 				if (footerLineKeyChars[c] == 0) {
-					if (c == ':')
-						return ptr;
+					if (c == ':') {
+						int next = ptr + 1;
+						return (next==raw.length || raw[next] == ' ' || raw[next] == '\n') ? ptr : -1;
+					}
 					return -1;
 				}
 				ptr++;

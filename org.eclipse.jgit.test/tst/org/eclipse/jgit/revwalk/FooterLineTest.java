@@ -199,7 +199,7 @@ public class FooterLineTest extends RepositoryTestCase {
 	@Test
 	public void testShortKey() throws IOException {
 		final RevCommit commit = parse("subject\n\nbody of commit\n" + "\n"
-				+ "K:V\n");
+				+ "K: V\n");
 		final List<FooterLine> footers = commit.getFooterLines();
 		FooterLine f;
 
@@ -311,6 +311,17 @@ public class FooterLineTest extends RepositoryTestCase {
 		f = footers.get(3);
 		assertEquals("Signed-off-by", f.getKey());
 		assertEquals("Main Tain Er <mte@example.com>", f.getValue());
+	}
+
+	@Test
+	public void testDoNotParseSolitaryUrlAsFooterLineEvenThoughItContainAColon() throws IOException {
+		final RevCommit commit = parse("subject\n\nComment\n"
+				+ "\n" // paragraph break, now footers appear in final block
+				+ "http://stackoverflow.com/a/1732454/438886\n");
+		final List<FooterLine> footers = commit.getFooterLines();
+
+		assertNotNull(footers);
+		assertEquals(0, footers.size());
 	}
 
 	@Test
