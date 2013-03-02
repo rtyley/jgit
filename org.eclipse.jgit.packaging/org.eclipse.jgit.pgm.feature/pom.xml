@@ -48,7 +48,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.eclipse.jgit</groupId>
+    <groupId>com.madgag</groupId>
     <artifactId>jgit.tycho.parent</artifactId>
     <version>2.1.0.201209190230-r</version>
   </parent>
@@ -66,25 +66,25 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.pgm</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.iplog</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.ui</artifactId>
       <version>${project.version}</version>
     </dependency>
