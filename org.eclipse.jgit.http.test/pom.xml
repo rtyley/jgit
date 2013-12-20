@@ -49,7 +49,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.eclipse.jgit</groupId>
+    <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
     <version>3.4.0-SNAPSHOT</version>
   </parent>
@@ -69,35 +69,35 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.http.apache</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.junit.http</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.junit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
+      <groupId>com.madgag</groupId>
       <artifactId>org.eclipse.jgit.http.server</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
