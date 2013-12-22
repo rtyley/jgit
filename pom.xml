@@ -54,7 +54,7 @@
   <groupId>com.madgag</groupId>
   <artifactId>org.eclipse.jgit-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.2.0.0.2-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
+  <version>3.2.0.0.2-UNOFFICIAL-ROBERTO-RELEASE</version>
 
   <name>JGit - Parent</name>
   <url>${jgit-url}</url>
