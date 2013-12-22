@@ -42,15 +42,13 @@
    ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
-    <version>3.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
+    <version>3.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.pgm</artifactId>
@@ -61,7 +59,7 @@
   </description>
 
   <properties>
-    <translate-qualifier/>
+    <translate-qualifier />
     <source-bundle-manifest>${project.build.directory}/META-INF/SOURCE-MANIFEST.MF</source-bundle-manifest>
   </properties>
 
@@ -210,7 +208,7 @@
                   <fileset file="${basedir}/jgit.sh" />
                   <fileset file="${basedir}/target/jgit-cli.jar" />
                 </concat>
-                <chmod file="${basedir}/target/jgit" perm="a+x"/>
+                <chmod file="${basedir}/target/jgit" perm="a+x" />
               </tasks>
             </configuration>
             <goals>
@@ -222,9 +220,9 @@
             <phase>generate-resources</phase>
             <configuration>
               <tasks>
-                <copy file="META-INF/SOURCE-MANIFEST.MF" tofile="${source-bundle-manifest}" overwrite="true"/>
+                <copy file="META-INF/SOURCE-MANIFEST.MF" tofile="${source-bundle-manifest}" overwrite="true" />
                 <replace file="${source-bundle-manifest}">
-                  <replacefilter token=".qualifier" value=".${maven.build.timestamp}"/>
+                  <replacefilter token=".qualifier" value=".${maven.build.timestamp}" />
                 </replace>
               </tasks>
             </configuration>
