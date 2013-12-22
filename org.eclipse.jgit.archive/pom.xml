@@ -48,7 +48,7 @@
   <parent>
     <groupId>com.madgag</groupId>
     <artifactId>org.eclipse.jgit-parent</artifactId>
-    <version>3.2.0.0.1-UNOFFICIAL-ROBERTO-RELEASE</version>
+    <version>3.2.0.0.2-UNOFFICIAL-ROBERTO-RELEASE-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jgit.archive</artifactId>
