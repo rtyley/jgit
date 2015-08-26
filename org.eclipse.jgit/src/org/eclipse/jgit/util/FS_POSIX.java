@@ -271,11 +271,6 @@ public class FS_POSIX extends FS {
 	}
 
 	@Override
-	public boolean exists(File path) {
-		return FileUtil.exists(path);
-	}
-
-	@Override
 	public boolean isDirectory(File path) {
 		return FileUtil.isDirectory(path);
 	}

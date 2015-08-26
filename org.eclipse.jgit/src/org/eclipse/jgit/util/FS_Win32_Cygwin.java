@@ -194,11 +194,6 @@ public class FS_Win32_Cygwin extends FS_Win32 {
 	}
 
 	@Override
-	public boolean exists(File path) {
-		return FileUtil.exists(path);
-	}
-
-	@Override
 	public boolean isDirectory(File path) {
 		return FileUtil.isDirectory(path);
 	}
